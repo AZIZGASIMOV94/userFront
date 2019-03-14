@@ -1,24 +1,39 @@
 package com.userFront.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class User {
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "userId", nullable = false, updatable = false)
     private Long userId;
     private String username;
-
-
-
     private String password;
     private String firstName;
     private String lastName;
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
     private String phone;
 
     private boolean enabled = true;
 
+    @OneToOne
     private PrimaryAccount primaryAccount;
+
+    @OneToOne
     private SavingsAccount savingsAccount;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Appointment> appointmentList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Recipient> recipientList;
 
     public Long getUserId() {
@@ -120,8 +135,8 @@ public class User {
     public String toString() {
         return "User{" +
                 "userId=" + userId +
-                ", password='" + password + '\'' +
                 ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
