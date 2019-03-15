@@ -1,8 +1,14 @@
 package com.userFront.domain;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class SavingsTransaction {
@@ -18,15 +24,12 @@ public class SavingsTransaction {
     private BigDecimal availableBalance;
 
     @ManyToOne
-    @JoinColumn(name = "saving_account_id")
+    @JoinColumn(name = "savings_account_id")
     private SavingsAccount savingsAccount;
 
-    public SavingsTransaction(){}
+    public SavingsTransaction() {}
 
-    public SavingsTransaction(Date date, String description,
-                              String type, String status, double amount,
-                              BigDecimal availableBalance,
-                              SavingsAccount savingsAccount) {
+    public SavingsTransaction(Date date, String description, String type, String status, double amount, BigDecimal availableBalance, SavingsAccount savingsAccount) {
         this.date = date;
         this.description = description;
         this.type = type;
@@ -100,3 +103,4 @@ public class SavingsTransaction {
         this.savingsAccount = savingsAccount;
     }
 }
+

@@ -1,10 +1,18 @@
 package com.userFront.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class PrimaryAccount {
 
@@ -14,7 +22,7 @@ public class PrimaryAccount {
     private int accountNumber;
     private BigDecimal accountBalance;
 
-    @OneToMany(mappedBy = "Appointment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "primaryAccount", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<PrimaryTransaction> primaryTransactionList;
 
@@ -49,4 +57,10 @@ public class PrimaryAccount {
     public void setPrimaryTransactionList(List<PrimaryTransaction> primaryTransactionList) {
         this.primaryTransactionList = primaryTransactionList;
     }
+
+
 }
+
+
+
+

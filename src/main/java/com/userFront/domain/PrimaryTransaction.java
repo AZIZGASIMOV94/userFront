@@ -1,8 +1,14 @@
 package com.userFront.domain;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class PrimaryTransaction {
@@ -17,20 +23,10 @@ public class PrimaryTransaction {
     private double amount;
     private BigDecimal availableBalance;
 
-    @ManyToOne
-    @JoinColumn(name = "primary_account_id")
-    private PrimaryAccount primaryAccount;
+    public PrimaryTransaction() {}
 
-    public PrimaryTransaction(){}
 
-    public PrimaryTransaction(Date date,
-                              String description,
-                              String type,
-                              String status,
-                              double amount,
-                              BigDecimal availableBalance,
-                              PrimaryAccount primaryAccount) {
-        super();
+    public PrimaryTransaction(Date date, String description, String type, String status, double amount, BigDecimal availableBalance, PrimaryAccount primaryAccount) {
         this.date = date;
         this.description = description;
         this.type = type;
@@ -39,6 +35,10 @@ public class PrimaryTransaction {
         this.availableBalance = availableBalance;
         this.primaryAccount = primaryAccount;
     }
+
+    @ManyToOne
+    @JoinColumn(name = "primary_account_id")
+    private PrimaryAccount primaryAccount;
 
     public Long getId() {
         return id;
@@ -103,4 +103,6 @@ public class PrimaryTransaction {
     public void setPrimaryAccount(PrimaryAccount primaryAccount) {
         this.primaryAccount = primaryAccount;
     }
+
 }
+
