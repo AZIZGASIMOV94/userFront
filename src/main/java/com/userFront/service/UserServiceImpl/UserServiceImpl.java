@@ -12,7 +12,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
-    public void seva(User user){
+    public void save(User user){
         userDao.save(user);
     }
 
@@ -45,4 +45,5 @@ public class UserServiceImpl implements UserService {
             return false;
         }
     }
+
 }
