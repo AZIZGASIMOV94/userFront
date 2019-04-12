@@ -1,14 +1,19 @@
 package com.userFront.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.userFront.domain.security.Authority;
+import com.userFront.domain.security.UserRole;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-public class User {
-
-
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "userId", nullable = false, updatable = false)
@@ -36,12 +41,40 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Recipient> recipientList;
 
+
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Set<UserRole> userRoles = new HashSet<>();
+
     public Long getUserId() {
         return userId;
     }
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        userRoles.forEach(ur -> authorities.add(new Authority(ur.getRole().getName())));
+        return authorities;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
     public String getPassword() {
@@ -93,6 +126,14 @@ public class User {
 
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public Set<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(Set<UserRole> userRoles) {
+        this.userRoles = userRoles;
     }
 
     public void setEnabled(boolean enabled) {
