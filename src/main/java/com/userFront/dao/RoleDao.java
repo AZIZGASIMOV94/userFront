@@ -1,4 +1,4 @@
-package com.userFront.Dao;
+package com.userFront.dao;
 
 import com.userFront.domain.security.Role;
 import org.springframework.data.repository.CrudRepository;

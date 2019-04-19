@@ -1,6 +1,6 @@
 package com.userFront.service.UserServiceImpl;
 
-import com.userFront.Dao.UserDao;
+import com.userFront.dao.UserDao;
 import com.userFront.domain.User;
 
 import org.slf4j.Logger;

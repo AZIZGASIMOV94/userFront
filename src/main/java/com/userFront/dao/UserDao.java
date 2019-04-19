@@ -1,4 +1,4 @@
-package com.userFront.Dao;
+package com.userFront.dao;
 
 import com.userFront.domain.User;
 import org.springframework.data.repository.CrudRepository;

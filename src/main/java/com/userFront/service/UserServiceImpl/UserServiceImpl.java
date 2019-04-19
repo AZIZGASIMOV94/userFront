@@ -1,9 +1,10 @@
 package com.userFront.service.UserServiceImpl;
 
-import com.userFront.Dao.RoleDao;
-import com.userFront.Dao.UserDao;
+import com.userFront.dao.RoleDao;
+import com.userFront.dao.UserDao;
 import com.userFront.domain.User;
 import com.userFront.domain.security.UserRole;
+import com.userFront.service.AccountService;
 import com.userFront.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AccountService accountService;
 
     public void save(User user){
         userDao.save(user);
@@ -64,6 +68,7 @@ public class UserServiceImpl implements UserService {
             }
 
             user.getUserRoles().addAll(userRoles);
+
 
             user.setPrimaryAccount(accountService.createPrimaryAccount());
             user.setSavingsAccount(accountService.createSavingsAccount());
