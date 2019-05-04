@@ -4,6 +4,7 @@ import com.userFront.dao.PrimaryAccountDao;
 import com.userFront.dao.SavingsAccountDao;
 import com.userFront.domain.*;
 import com.userFront.service.AccountService;
+import com.userFront.service.TransactionService;
 import com.userFront.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private TransactionService transactionService;
 
     public PrimaryAccount createPrimaryAccount() {
         PrimaryAccount primaryAccount = new PrimaryAccount();
@@ -57,7 +61,7 @@ public class AccountServiceImpl implements AccountService {
             Date date = new Date();
 
             PrimaryTransaction primaryTransaction = new PrimaryTransaction(date, "Deposit to Primary Account", "Account", "Finished", amount, primaryAccount.getAccountBalance(), primaryAccount);
-            //transactionService.savePrimaryDepositTransaction(primaryTransaction);
+            transactionService.savePrimaryDepositTransaction(primaryTransaction);
 
         } else if (accountType.equalsIgnoreCase("Savings")) {
             SavingsAccount savingsAccount = user.getSavingsAccount();
@@ -66,7 +70,7 @@ public class AccountServiceImpl implements AccountService {
 
             Date date = new Date();
             SavingsTransaction savingsTransaction = new SavingsTransaction(date, "Deposit to savings Account", "Account", "Finished", amount, savingsAccount.getAccountBalance(), savingsAccount);
-           // transactionService.saveSavingsDepositTransaction(savingsTransaction);
+            transactionService.saveSavingsDepositTransaction(savingsTransaction);
         }
     }
 
