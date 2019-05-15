@@ -23,7 +23,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     public Appointment findAppointment(Long id) {
-        return appointmentDao.findOne(id);
+      //  return appointmentDao.findOne(id);
+        return null;
     }
 
     public void confirmAppointment(Long id) {
