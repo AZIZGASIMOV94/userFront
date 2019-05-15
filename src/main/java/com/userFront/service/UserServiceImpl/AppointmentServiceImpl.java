@@ -5,12 +5,13 @@ import com.userFront.domain.Appointment;
 import com.userFront.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class AppointmentServiceImpl implements AppointmentService {
-
     @Autowired
     private AppointmentDao appointmentDao;
 
@@ -23,7 +24,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     public Appointment findAppointment(Long id) {
-        return appointmentDao.findOne(id);
+        return appointmentDao.findById(id).get();
     }
 
     public void confirmAppointment(Long id) {
