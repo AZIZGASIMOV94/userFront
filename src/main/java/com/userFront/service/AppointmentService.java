@@ -5,6 +5,7 @@ import com.userFront.domain.Appointment;
 import java.util.List;
 
 public interface AppointmentService {
+
     Appointment createAppointment(Appointment appointment);
 
     List<Appointment> findAll();
